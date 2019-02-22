@@ -7,13 +7,10 @@ function Letter(letter) {
         return this.isGuessed ? this.letter : "_";
     }
 
-    this.guess = function(letter) {
-        if(letter === this.letter) {
+    this.guess = function(guessedLetter) {
+        if(guessedLetter === this.letter) {
             this.isGuessed = true;
-            console.log("Correct!")
-        } else {
-            console.log("Incorrect")
-        }
+        } 
     }
 }
 
