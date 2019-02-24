@@ -21,8 +21,8 @@ var promptInput = function() {
         }
         ]).then(function(input){
 
-            //Checks if Letter has already been guessed
-            var isGuessedAlready = false;
+            //Checks if Letter is valid
+            var isValidInput = false;
             guessedLetters.forEach(function(char) {
                 if(char === input.letterGuess) {
                     console.log("\nThat letter has already been guessed!");
@@ -33,7 +33,7 @@ var promptInput = function() {
             
 
             //If letter has not been guessed 
-            if(!isGuessedAlready) {
+            if(!isValidInput) {
                 guessedLetters.push(input.letterGuess);
                 wordArr.forEach(function(word) {
                     word.guessLetter(input.letterGuess);
