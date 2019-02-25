@@ -20,23 +20,12 @@ var promptInput = function() {
             name: "letterGuess"
         }
         ]).then(function(input){
+            var guess = input.letterGuess.toLowerCase();
 
-            //Checks if Letter is valid
-            var isValidInput = false;
-            guessedLetters.forEach(function(char) {
-                if(char === input.letterGuess) {
-                    console.log("\nThat letter has already been guessed!");
-                    isGuessedAlready = true;
-                    promptInput();
-                }
-            });
-            
-
-            //If letter has not been guessed 
-            if(!isValidInput) {
-                guessedLetters.push(input.letterGuess);
+            if(isValidInput(guess)) {
+                guessedLetters.push(guess);
                 wordArr.forEach(function(word) {
-                    word.guessLetter(input.letterGuess);
+                    word.guessLetter(guess);
                 })
 
                 //Check if input is correct
@@ -44,7 +33,7 @@ var promptInput = function() {
                 for(i = 0; i < wordArr.length; i++) {
                     var letterArr = wordArr[i].letters();
                     for(j = 0; j < letterArr.length; j++) {
-                        if(letterArr[j] === input.letterGuess) {
+                        if(letterArr[j] === guess) {
                             correctGuess = true;
                         }
                     }
@@ -57,7 +46,7 @@ var promptInput = function() {
                     console.log("\nIncorrect!");
                     remainingGuesses -= 1;
                 }
-
+                
                 //is won?
                 var isWon = true;
                 var displayArr = displayWordString();
@@ -73,6 +62,8 @@ var promptInput = function() {
                 if(isWon) {
                     console.log("\nYou've Won!");
                 }
+            } else {
+                promptInput();
             }
         });
     } else {
@@ -83,6 +74,21 @@ var promptInput = function() {
 
 
 promptInput();
+
+function isValidInput(guess) {
+    var isValid = true;
+    guessedLetters.forEach(function(char) {
+        if(char === guess) {
+            console.log("\nThat letter has already been guessed!");
+            isValid = false;
+        } else if (!(/[a-zA-Z]/.test(guess))) {
+            console.log("\nPlease enter a Valid input.")
+            isValid = false;
+        }
+    });
+
+    return isValid;
+}
 
 function displayWordString() {
     result = "\n";
